@@ -20,7 +20,7 @@
         app:backgroundTint="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/route_fab"
-        app:srcCompat="@drawable/ic_gps" />
+        app:srcCompat="@drawable/ic_gps_fab_indoor" />
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
         android:layout_margin="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/ic_directions"/>
+        app:srcCompat="@drawable/ic_directions_fab_indoor"/>
 
     <ProgressBar
         android:id="@+id/loading"
