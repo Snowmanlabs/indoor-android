@@ -1,14 +1,9 @@
-package com.snowmanlabs.indoor.model
-
-
-import android.graphics.Bitmap
-import java.io.Serializable
+package com.snowmanlabs.indoor.domain
 
 /**
  * Created by diefferson on 06/10/17.
  */
-
-class Floor(builder: Builder) : Serializable{
+class Floor(builder: Builder){
 
     var number: Int? = null
     var name: String? = null
@@ -18,7 +13,7 @@ class Floor(builder: Builder) : Serializable{
     var height: Float ? = null
     var bearing: Float ? = null
     var description: String? = null
-    var image: Bitmap? = null
+    var image: String? = null
 
     init {
         this.number = builder.number
@@ -42,55 +37,55 @@ class Floor(builder: Builder) : Serializable{
         var height: Float ? = null
         var bearing: Float ? = null
         var description: String? = null
-        var image: Bitmap? = null
+        var image: String? = null
 
 
-        fun number(number:Int): Builder{
+        fun number(number:Int): Builder {
             this.number = number
             return this
         }
 
-        fun name(name:String): Builder{
+        fun name(name:String): Builder {
             this.name = name
             return this
         }
 
-        fun latitude(latitude:Double): Builder{
+        fun latitude(latitude:Double): Builder {
             this.latitude = latitude
             return this
         }
 
-        fun longitude(longitude:Double): Builder{
+        fun longitude(longitude:Double): Builder {
             this.longitude = longitude
             return this
         }
 
-        fun width(width:Float): Builder{
+        fun width(width:Float): Builder {
             this.width = width
             return this
         }
 
-        fun height(height:Float): Builder{
+        fun height(height:Float): Builder {
             this.height = height
             return this
         }
 
-        fun bearing(bearing:Float): Builder{
+        fun bearing(bearing:Float): Builder {
             this.bearing = bearing
             return this
         }
 
-        fun description(description:String): Builder{
+        fun description(description:String): Builder {
             this.description = description
             return this
         }
 
-        fun image(image: Bitmap): Builder{
+        fun image(image: String): Builder {
             this.image = image
             return this
         }
 
-        fun build() : Floor{
+        fun build() : Floor {
 
             if(this.number == null) throw IllegalStateException("number == null")
             if(this.name == null) throw IllegalStateException("name == null")

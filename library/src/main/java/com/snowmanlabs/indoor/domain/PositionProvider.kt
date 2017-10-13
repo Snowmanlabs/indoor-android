@@ -1,16 +1,9 @@
 package com.snowmanlabs.indoor.domain
 
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.location.Location
 import android.location.LocationManager
-import android.os.BatteryManager
-import android.preference.PreferenceManager
 import android.util.Log
-
-import com.snowmanlabs.indoor.IndoorPresenter
-
 
 abstract class PositionProvider(private val context: Context, private val listener: PositionListener) {
 
@@ -18,12 +11,12 @@ abstract class PositionProvider(private val context: Context, private val listen
         fun onPositionUpdate(position: Position)
     }
 
-    protected val locationManager: LocationManager
+    protected val locationManager: LocationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-    private val deviceId: String
-    protected var type: String
+    //DEFINITIONS PROVIDER
+    protected var type: String = "gps"  // or mixed
     protected var requestInterval: Long = 0
-    protected var interval: Long = 0
+    protected var interval: Long = 2000
     protected var distance: Double = 0.toDouble()
     protected var angle: Double = 0.toDouble()
 
@@ -31,21 +24,11 @@ abstract class PositionProvider(private val context: Context, private val listen
 
     init {
 
-        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-        locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
-        deviceId = preferences.getString(IndoorPresenter.KEY_DEVICE, "undefined")
-        interval = java.lang.Long.parseLong(preferences.getString(IndoorPresenter.KEY_INTERVAL, "2")) * 1000
-        distance = Integer.parseInt(preferences.getString(IndoorPresenter.KEY_DISTANCE, "0")).toDouble()
-        angle = Integer.parseInt(preferences.getString(IndoorPresenter.KEY_ANGLE, "0")).toDouble()
-
         if (distance > 0 || angle > 0) {
             requestInterval = MINIMUM_INTERVAL.toLong()
         } else {
             requestInterval = interval
         }
-
-        type = preferences.getString(IndoorPresenter.KEY_PROVIDER, "mixed")
     }
 
     abstract fun startUpdates()
@@ -60,7 +43,7 @@ abstract class PositionProvider(private val context: Context, private val listen
                 || angle > 0 && Math.abs(location.bearing - lastLocation!!.bearing) >= angle)) {
             Log.i(TAG, "location new")
             lastLocation = location
-            listener.onPositionUpdate(Position(deviceId, location, getBatteryLevel(context)))
+            listener.onPositionUpdate(Position(location))
         } else {
             Log.i(TAG, if (location != null) "location ignored" else "location nil")
         }
@@ -68,19 +51,10 @@ abstract class PositionProvider(private val context: Context, private val listen
 
     companion object {
 
-        public val TAG = PositionProvider::class.java.simpleName
+        val TAG = PositionProvider::class.java.simpleName!!
 
         private val MINIMUM_INTERVAL = 1000
 
-        fun getBatteryLevel(context: Context): Double {
-            val batteryIntent = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
-            if (batteryIntent != null) {
-                val level = batteryIntent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)
-                val scale = batteryIntent.getIntExtra(BatteryManager.EXTRA_SCALE, 1)
-                return level * 100.0 / scale
-            }
-            return 0.0
-        }
     }
 
 }

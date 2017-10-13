@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="backgroundLight">#F4F4F4</color>
+
+    <color name="transparencyLight">#b9f2f2f2</color>
+    <color name="textLight">#d3d3d3</color>
+    <color name="textDark">@android:color/black</color>
+
+    <color name="balloon_rate">@color/colorPrimary</color>
+    <color name="icon_rate">#969696</color>
+
+    <color name="feed_adapter_feeditem_default_bg">#FFFFFF</color>
+    <color name="feed_adapter_feeditem_selected_bg">#ececec</color>
+
+    <color name="app_primary_text_dark">#ffffff</color>
+    <color name="profile_card_font">#ffffff</color>
+    <color name="profile_card_bg">@color/colorAccent</color>
+
+</resources>

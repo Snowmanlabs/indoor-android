@@ -1,6 +1,7 @@
 package com.snowmanlabs.indoor
 
 import android.Manifest
+import android.app.Dialog
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -9,51 +10,63 @@ import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.snowmanlabs.indoor.domain.Position
-import com.snowmanlabs.indoor.model.Connector
-import com.snowmanlabs.indoor.model.Floor
-import com.snowmanlabs.indoor.model.POI
-import com.snowmanlabs.indoor.utils.LatLngInterpolator
-import com.snowmanlabs.indoor.utils.MapsUtils
-import com.snowmanlabs.indoor.utils.MarkerAnimation
+import android.view.WindowManager
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.Spinner
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.*
-import java.util.*
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.MapsInitializer
+import com.google.android.gms.maps.model.*
+import com.snowmanlabs.indoor.domain.Position
+import com.snowmanlabs.indoor.domain.Dijkstra
+import com.snowmanlabs.indoor.domain.Floor
+import com.snowmanlabs.indoor.domain.Graph
+import com.snowmanlabs.indoor.domain.POI
+import com.snowmanlabs.indoor.utils.*
 import com.snowmanlabs.library.R
 import kotlinx.android.synthetic.main.fragment_indoor.*
+import java.util.LinkedList
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+import com.google.android.gms.maps.model.GroundOverlayOptions
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.squareup.picasso.Picasso
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import android.os.AsyncTask
+import java.io.IOException
+
 
 /**
  * Created by diefferson on 06/10/17.
  */
+@SuppressWarnings("MissingPermission")
 abstract class IndoorFragment : Fragment(), IIndoorView {
 
-    private val PERMISSIONS_REQUEST_LOCATION = 2
+    private val PERMISSIONS_REQUEST_LOCATION = 1
 
+    //MAPS
     private lateinit var mMap: GoogleMap
     private var myPosition : Marker? =  null
-
+    private var atualRoute : Polyline? =  null
     private val mGroudOverlays = HashMap<Int, GroundOverlay>()
     private val mPoisMarkes = HashMap<Int, Marker>()
-    private val mConnectorsMarkes = HashMap<Int, Marker>()
-    private var indoorPresenter: IndoorPresenter? =  null
 
+    //MODELS
     private var mFloors: List<Floor>?= null
     private var mPois: List<POI>?= null
-    private var mConnectors: List<Connector>?= null
+    private var poisMap = HashMap<Int, POI>()
+    private var graph: Graph?= null
 
-    abstract fun getFloors():List<Floor>?
-    abstract fun getPois(): List<POI>?
-    abstract fun getConnectors(): List<Connector>?
+    private var indoorPresenter: IndoorPresenter? =  null
 
+    abstract fun getFloors():List<Floor>
+    abstract fun getPois(): List<POI>
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    private var zoomMyPosition = true
+    private var showMyPosition = true
 
-        return inflater.inflate(R.layout.fragment_indoor, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = inflater.inflate(R.layout.fragment_indoor, container, false)!!
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,11 +82,127 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
 
         mapView.getMapAsync({ map ->
             mMap = map
+            mMap.setMinZoomPreference(18F)
+            mMap.uiSettings.isMyLocationButtonEnabled = false
+
             initializeFloors()
             initializePois()
-            initializeConnectors()
-            startTrackingService(true, false)
+            mMap.uiSettings.isMapToolbarEnabled = false
+
+            startTrackingService(true)
+
         })
+
+        mylocation_fab.setOnClickListener { displayMyPosition() }
+        route_fab.setOnClickListener { showDirectionDialog() }
+    }
+
+    private fun showRoute(poiOrigin: POI, poiDestiny: POI){
+
+        var path :LinkedList<POI>? = null
+        val coords = ArrayList<LatLng>()
+
+        initializeGraph()
+        graph = Dijkstra.calculateShortestPathFromSource(graph!!, poiOrigin)
+
+        graph!!.nodes.forEach {
+            if(it.id == poiDestiny.id){
+                path = it.shortestPath
+            }
+        }
+
+        path!!.forEach {
+            coords.add(LatLng(it.latitude!!, it.longitude!!))
+        }
+
+        coords.add(LatLng(poiDestiny.latitude!!, poiDestiny.longitude!!))
+
+        if(atualRoute == null){
+            atualRoute = mMap.addPolyline( PolylineOptions().addAll(coords))
+        }else{
+            atualRoute!!.points = coords
+        }
+    }
+
+    private fun showDirectionDialog() {
+
+        val directionDialog = Dialog(context)
+        directionDialog.setContentView(R.layout.directions_dialog)
+
+        val adapter =  ArrayAdapter<POI>(context, android.R.layout.simple_spinner_item, mPois)
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        val originSpinner = directionDialog.findViewById<Spinner>(R.id.origin)
+        val destinySpinner = directionDialog.findViewById<Spinner>(R.id.destiny)
+        val confirmButtom = directionDialog.findViewById<Button>(R.id.confirm_btn)
+        val cancelButtom = directionDialog.findViewById<Button>(R.id.cancel_btn)
+
+        originSpinner.adapter = adapter
+        destinySpinner.adapter = adapter
+
+        cancelButtom.setOnClickListener({ v: View -> directionDialog.dismiss() })
+
+        confirmButtom.setOnClickListener({ v: View ->
+            showRoute(originSpinner.selectedItem as POI, destinySpinner.selectedItem as POI)
+            directionDialog.dismiss()
+        })
+
+        val  lp = WindowManager.LayoutParams()
+        lp.copyFrom(directionDialog.window.attributes)
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT
+        directionDialog.window.attributes = lp
+
+        directionDialog.show()
+
+    }
+
+    private fun displayMyPosition(){
+
+        if(showMyPosition){
+            mMap.isMyLocationEnabled = true
+            showMyPosition = !showMyPosition
+        }else{
+            mMap.isMyLocationEnabled = false
+            showMyPosition = !showMyPosition
+        }
+
+//        if(getPresenter().isRunning){
+//            zoomMyPosition = true
+//            getPresenter().stop()
+//            if(myPosition!= null) myPosition!!.isVisible = false
+//        }else{
+//            loading.visibility = View.VISIBLE
+//            getPresenter().start()
+//            if(myPosition!= null)myPosition!!.isVisible = true
+//        }
+    }
+
+    override fun setMyPosition(position : Position){
+        loading.visibility = View.GONE
+
+
+        val myLatLang =  LatLng(position.latitude, position.longitude)
+
+        if(myPosition == null){
+            myPosition = MapsUtils.markerFactory(mMap, position.latitude, position.longitude, "eu", "eu", R.drawable.blue_dot)
+        }else{
+            MarkerAnimation.animateMarkerToGB(myPosition!!,
+                    myLatLang, LatLngInterpolator.Linear())
+        }
+
+        if(zoomMyPosition){
+            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(myLatLang, 20f)
+            mMap.animateCamera(cameraUpdate)
+        }
+
+        zoomMyPosition = false
+    }
+
+    override fun selectFloor(floor: Int) {
+        mGroudOverlays.forEach {
+            it.value.isVisible = it.key == floor
+        }
     }
 
     private fun getPresenter(): IndoorPresenter {
@@ -84,31 +213,7 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
         return indoorPresenter!!
     }
 
-    override fun setMyPosition(position : Position){
-
-        var myLatLang =  LatLng(position.latitude, position.longitude)
-
-        if(myPosition == null){
-            myPosition = MapsUtils.markerFactory(mMap, position.latitude, position.longitude, "eu", "eu")
-        }else{
-            MarkerAnimation.animateMarkerToGB(myPosition!!,
-                    myLatLang, LatLngInterpolator.Linear())
-        }
-
-        var cameraUpdate = CameraUpdateFactory.newLatLngZoom(myLatLang, 22f)
-        mMap.animateCamera(cameraUpdate)
-    }
-
-    override fun selectFloor(floor: Int) {
-
-        mGroudOverlays.forEach {
-            it.value.isVisible = it.key == floor
-        }
-    }
-
-
-    private fun startTrackingService(checkPermission: Boolean, permission: Boolean) {
-        var permission = permission
+    private fun startTrackingService(checkPermission: Boolean) {
         if (checkPermission) {
             val missingPermissions = HashSet<String>()
             if (!hasPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -117,9 +222,7 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
             if (!hasPermission(Manifest.permission.ACCESS_COARSE_LOCATION)) {
                 missingPermissions.add(Manifest.permission.ACCESS_COARSE_LOCATION)
             }
-            if (missingPermissions.isEmpty()) {
-                permission = true
-            } else {
+            if (!missingPermissions.isEmpty()) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     requestPermissions(missingPermissions.toTypedArray(),
                             PERMISSIONS_REQUEST_LOCATION)
@@ -127,24 +230,22 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
                 return
             }
         }
-
-        getPresenter().start()
     }
 
-    private fun initializeConnectors(){
-
-        if(mConnectors == null){
-            mConnectors = getConnectors()
-        }
-
-        if(mConnectors == null) throw IllegalStateException("mConnectors  = null")
-
-        mConnectors!!.forEach {
-            val poi =  MapsUtils.markerFactory(mMap, it.latitude, it.longitude, "", "")
-            mConnectorsMarkes[it.id] = poi
+    private fun cleanPaths(){
+        mPois!!.forEach {
+            it.shortestPath =  LinkedList<POI>()
         }
     }
 
+    private  fun initializeGraph(){
+        cleanPaths()
+        graph = Graph()
+
+        mPois!!.forEach {
+            graph!!.addNode(it)
+        }
+    }
 
     private fun initializePois(){
 
@@ -152,11 +253,14 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
             mPois = getPois()
         }
 
-        if(mPois == null) throw IllegalStateException("mPois  = null")
+
+        if(mPois!!.isEmpty()) throw IllegalStateException("mPois size is 0")
 
         mPois!!.forEach {
-            val poi =  MapsUtils.markerFactory(mMap,it.latitude, it.longitude, it.name!!, it.description!!)
+            val poi =  MapsUtils.markerFactory(mMap,it.latitude, it.longitude, it.name!!, it.description!!, R.drawable.ic_poi)
+            if(it.type == POI.CONNECTOR_TYPE){poi.isVisible = false}
             mPoisMarkes[it.id!!] = poi
+            poisMap.put(it.id!!, it)
         }
     }
 
@@ -166,19 +270,61 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
             mFloors = getFloors()
         }
 
-        if(mFloors == null || mFloors!!.isEmpty()) throw IllegalStateException("mFloors  = null or size is 0")
+        if(mFloors!!.isEmpty()) throw IllegalStateException("mFloors size is 0")
 
         mFloors!!.forEach {
-            var groundOverlay =  MapsUtils.groundOverlayFactory(mMap, it)
-            mGroudOverlays[it.number!!] = groundOverlay!!
+            AddGroundOverlay().execute(it.number.toString(), it.image, it.latitude.toString(), it.longitude.toString(),it.bearing.toString(), it.width.toString(), it.height.toString())
         }
 
-        if(mFloors!![0] != null){
-            selectFloor(0)
-            var cameraUpdate = CameraUpdateFactory.newLatLngZoom(LatLng(mFloors!![0].latitude!!, mFloors!![0].longitude!!), 20f)
-            mMap.animateCamera(cameraUpdate)
+    }
+
+    inner class AddGroundOverlay : AsyncTask<String, Int, BitmapDescriptor>() {
+
+        internal var bitmapDescriptor: BitmapDescriptor? = null
+        var number:Int? = null
+        var myUrl:String? = null
+        var latitude:Double? = null
+        var longitude:Double? = null
+        var bearing:Float? = null
+        var width:Float? = null
+        var height:Float? = null
+
+        override fun doInBackground(vararg params: String): BitmapDescriptor? {
+            number = params[0].toInt()
+            myUrl = params[1]
+            latitude  = params[2].toDouble()
+            longitude = params[3].toDouble()
+            bearing = params[4].toFloat()
+            width = params[5].toFloat()
+            height = params[6].toFloat()
+
+            try {
+                bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(Picasso.with(activity).load(myUrl).get())
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+            return bitmapDescriptor
         }
 
+        override fun onPostExecute(icon: BitmapDescriptor) {
+
+            try {
+
+                val groundOverlay =  MapsUtils.groundOverlayFactory(mMap, LatLng(latitude!!, longitude!!),width!!, height!!, bearing!!, icon)
+                mGroudOverlays[number!!] = groundOverlay!!
+
+                if(mFloors!![0] != null){
+                    selectFloor(0)
+                    val cameraUpdate = CameraUpdateFactory.newLatLngZoom(LatLng(mFloors!![0].latitude!!, mFloors!![0].longitude!!), 20f)
+                    mMap.animateCamera(cameraUpdate)
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+        }
     }
 
     private fun hasPermission(permission: String): Boolean {
@@ -191,16 +337,15 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
         return true
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
 
         if(mapView != null){  mapView.onDestroy() }
 
-        if (indoorPresenter != null) {
-            getPresenter().stop()
-            indoorPresenter = null
-        }
+//        if (indoorPresenter != null) {
+//            getPresenter().stop()
+//            indoorPresenter = null
+//        }
     }
 
     override fun onResume() {

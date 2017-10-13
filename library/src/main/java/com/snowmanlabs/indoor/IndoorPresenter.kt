@@ -4,24 +4,27 @@ import android.content.Context
 import android.os.Handler
 import android.util.Log
 import com.snowmanlabs.indoor.domain.*
-import java.io.Serializable
 
-class IndoorPresenter(private val context: Context, private val mView: IIndoorView?) : PositionProvider.PositionListener , Serializable{
+class IndoorPresenter(private val context: Context, private val mView: IIndoorView?) : PositionProvider.PositionListener {
 
     private val handler: Handler = Handler()
     private val positionProvider: PositionProvider
+    var isRunning = false
 
     init {
 
-        positionProvider =  MixedPositionProvider(context, this)
+        //MIXED
+//        positionProvider =  MixedPositionProvider(context, this)
 
-        //positionProvider = SimplePositionProvider(context, this)
+        // GPS
+        positionProvider = SimplePositionProvider(context, this)
 
     }
 
     fun start() {
         try {
             positionProvider.startUpdates()
+            isRunning = true
         } catch (e: SecurityException) {
             Log.w(TAG, e)
         }
@@ -29,6 +32,7 @@ class IndoorPresenter(private val context: Context, private val mView: IIndoorVi
 
     fun stop() {
         try {
+            isRunning = false
             positionProvider.stopUpdates()
         } catch (e: SecurityException) {
             Log.w(TAG, e)
@@ -50,7 +54,6 @@ class IndoorPresenter(private val context: Context, private val mView: IIndoorVi
         var action = action
         if (position != null) {
             action += " (" +
-                    "id:" + position.id +
                     " time:" + position.time!!.time / 1000 +
                     " lat:" + position.latitude +
                     " lon:" + position.longitude + ")"
@@ -59,13 +62,6 @@ class IndoorPresenter(private val context: Context, private val mView: IIndoorVi
     }
 
     companion object {
-
         private val TAG = IndoorPresenter::class.java.simpleName
-
-        var KEY_DEVICE = "id"
-        var KEY_INTERVAL = "interstatic String"
-        var KEY_DISTANCE = "distance"
-        var KEY_ANGLE = "angle"
-        var KEY_PROVIDER = "provider"
     }
 }

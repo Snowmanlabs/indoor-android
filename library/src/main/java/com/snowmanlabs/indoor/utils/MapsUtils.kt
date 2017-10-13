@@ -1,6 +1,7 @@
 package com.snowmanlabs.indoor.utils
 
-import com.snowmanlabs.indoor.model.Floor
+import android.content.Context
+import com.snowmanlabs.indoor.domain.Floor
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 
@@ -19,13 +20,23 @@ abstract class MapsUtils{
             return marker
         }
 
-        fun groundOverlayFactory(mMap: GoogleMap, floor : Floor): GroundOverlay?{
+         fun markerFactory(mMap: GoogleMap,lat: Double?, lng: Double?, title: String, snippet: String, icon: Int): Marker {
+            val latLng = LatLng(lat!!, lng!!)
+            val markerOptions = MarkerOptions()
+                    .position(latLng)
+                    .title(title)
+                    .snippet(snippet)
+                    .icon(BitmapDescriptorFactory.fromResource(icon))
+            val marker = mMap.addMarker(markerOptions)
+            return marker
+        }
+
+        fun groundOverlayFactory(mMap: GoogleMap, floor : Floor, bitmapDescriptor: BitmapDescriptor): GroundOverlay?{
 
             if (mMap != null) {
-                val bitmapDescriptor = floor.image!!
                 val center = LatLng(floor.latitude!!, floor.longitude!!)
                 val fpOverlay = GroundOverlayOptions()
-                        .image(BitmapDescriptorFactory.fromBitmap(floor.image))
+                        .image(bitmapDescriptor)
                         .visible(false)
                         .position(center, floor.width!!, floor.height!!)
                         .bearing(floor.bearing!!)
@@ -40,25 +51,23 @@ abstract class MapsUtils{
 
         }
 
+        fun groundOverlayFactory(mMap: GoogleMap, center :LatLng, width: Float, height: Float, bearing: Float , bitmapDescriptor: BitmapDescriptor): GroundOverlay?{
+
+            if (mMap != null) {
+                val fpOverlay = GroundOverlayOptions()
+                        .image(bitmapDescriptor)
+                        .visible(false)
+                        .position(center,width, height)
+                        .bearing(bearing)
+                        .transparency(0.5f)
+
+                var groundOverlay =  mMap.addGroundOverlay(fpOverlay)
+                return groundOverlay
+
+            }
+
+            return null
+
+        }
     }
-
-    //    private fun setUpGroundOverlay(floor : Int) {
-//        if (mGroudOverlay != null) {
-//            mGroudOverlay!!.remove()
-//        }
-//
-//
-//        if (mMap != null) {
-//            val bitmapDescriptor = BitmapDescriptorFactory
-//                    .fromResource(R.drawable.planta)
-//            val center = LatLng(-25.456030217451996, -49.2753406921695)
-//            val fpOverlay = GroundOverlayOptions()
-//                    .image(bitmapDescriptor)
-//                    .position(center, 20.97941f, 55.320877f)
-//                    .bearing(22.5f)
-//                    .transparency(0.5f)
-//            mGroudOverlay = mMap.addGroundOverlay(fpOverlay)
-//        }
-//    }
-
 }

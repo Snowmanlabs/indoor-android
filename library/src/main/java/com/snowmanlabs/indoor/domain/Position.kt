@@ -19,18 +19,7 @@ import android.location.Location
 
 import java.util.Date
 
-class Position {
-
-    constructor() {}
-
-    constructor(deviceId: String, location: Location, battery: Double) {
-        time = Date(location.time)
-        latitude = location.latitude
-        longitude = location.longitude
-        altitude = location.altitude
-    }
-
-    var id: Long = 0
+class Position(location: Location) {
 
     var time: Date? = null
 
@@ -40,4 +29,10 @@ class Position {
 
     var altitude: Double = 0.toDouble()
 
+    init {
+        time = Date(location.time)
+        latitude = location.latitude
+        longitude = location.longitude
+        altitude = location.altitude
+    }
 }

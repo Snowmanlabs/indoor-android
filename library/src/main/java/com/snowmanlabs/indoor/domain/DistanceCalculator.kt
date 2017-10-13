@@ -13,5 +13,4 @@ object DistanceCalculator {
         val d = EQUATORIAL_EARTH_RADIUS * c
         return d * 1000
     }
-
 }
