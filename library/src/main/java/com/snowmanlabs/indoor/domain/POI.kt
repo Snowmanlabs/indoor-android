@@ -23,7 +23,7 @@ class POI(builder : Builder) {
 
     //NODE ATRIBUTES
     var shortestPath = LinkedList<POI>()
-    var distance = Double.MAX_VALUE
+    var distance = Float.MAX_VALUE
     var adjacentNodes: MutableMap<POI, Double> = HashMap()
 
     fun addDestination(destination: POI) {

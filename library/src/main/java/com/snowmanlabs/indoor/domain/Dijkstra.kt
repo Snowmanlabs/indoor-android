@@ -9,17 +9,19 @@ import java.util.LinkedList
 object Dijkstra {
 
     fun calculateShortestPathFromSource(graph: Graph, source: POI): Graph {
-        source.distance = 0.0
+        source.distance = 0f
 
         val settledNodes = HashSet<POI>()
         val unsettledNodes = HashSet<POI>()
 
         unsettledNodes.add(source)
 
-        while (unsettledNodes.size != 0) {
+        while (unsettledNodes.size !== 0) {
             val currentNode = getLowestDistanceNode(unsettledNodes)
             unsettledNodes.remove(currentNode)
-            for ((adjacentNode, edgeWeight) in currentNode.adjacentNodes) {
+            for (adjacencyPair in currentNode.adjacentNodes) {
+                val adjacentNode = adjacencyPair.key
+                val edgeWeight = adjacencyPair.value
                 if (!settledNodes.contains(adjacentNode)) {
                     calculateMinimumDistance(adjacentNode, edgeWeight, currentNode)
                     unsettledNodes.add(adjacentNode)
@@ -27,12 +29,13 @@ object Dijkstra {
             }
             settledNodes.add(currentNode)
         }
+
         return graph
     }
 
     private fun getLowestDistanceNode(unsettledNodes: Set<POI>): POI {
         var lowestDistanceNode: POI? = null
-        var lowestDistance = Double.MAX_VALUE
+        var lowestDistance = Float.MAX_VALUE
         for (node in unsettledNodes) {
             val nodeDistance = node.distance
             if (nodeDistance < lowestDistance) {
@@ -46,7 +49,7 @@ object Dijkstra {
     private fun calculateMinimumDistance(evaluationNode: POI, edgeWeigh: Double?, sourceNode: POI) {
         val sourceDistance = sourceNode.distance
         if (sourceDistance + edgeWeigh!! < evaluationNode.distance) {
-            evaluationNode.distance = sourceDistance + edgeWeigh
+            evaluationNode.distance = (sourceDistance + edgeWeigh).toFloat()
             val shortestPath = LinkedList(sourceNode.shortestPath)
             shortestPath.add(sourceNode)
             evaluationNode.shortestPath = shortestPath

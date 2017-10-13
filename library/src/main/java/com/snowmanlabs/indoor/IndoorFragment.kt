@@ -29,7 +29,6 @@ import kotlinx.android.synthetic.main.fragment_indoor.*
 import java.util.LinkedList
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-import com.google.android.gms.maps.model.GroundOverlayOptions
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.squareup.picasso.Picasso
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -235,6 +234,7 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
     private fun cleanPaths(){
         mPois!!.forEach {
             it.shortestPath =  LinkedList<POI>()
+            it.distance  = Float.MAX_VALUE
         }
     }
 
@@ -252,7 +252,6 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
         if(mPois == null){
             mPois = getPois()
         }
-
 
         if(mPois!!.isEmpty()) throw IllegalStateException("mPois size is 0")
 
