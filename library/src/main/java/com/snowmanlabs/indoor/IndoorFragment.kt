@@ -65,7 +65,9 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
     private var zoomMyPosition = true
     private var showMyPosition = true
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = inflater.inflate(R.layout.fragment_indoor, container, false)!!
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater!!.inflate(R.layout.fragment_indoor, container, false)
+    }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -277,7 +279,7 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
 
     }
 
-    inner class AddGroundOverlay : AsyncTask<String, Int, BitmapDescriptor>() {
+    private inner class AddGroundOverlay : AsyncTask<String, Int, BitmapDescriptor>() {
 
         internal var bitmapDescriptor: BitmapDescriptor? = null
         var number:Int? = null
