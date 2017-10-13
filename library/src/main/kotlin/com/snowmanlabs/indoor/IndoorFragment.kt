@@ -72,30 +72,30 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        mapView.onCreate(savedInstanceState)
-//        mapView.onResume()
-//
-//        try {
-//            MapsInitializer.initialize(activity.applicationContext)
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
-//
-//        mapView.getMapAsync({ map ->
-//            mMap = map
-//            mMap.setMinZoomPreference(18F)
-//            mMap.uiSettings.isMyLocationButtonEnabled = false
-//
-//            initializeFloors()
-//            initializePois()
-//            mMap.uiSettings.isMapToolbarEnabled = false
-//
-//            startTrackingService(true)
-//
-//        })
-//
-//        mylocation_fab.setOnClickListener { displayMyPosition() }
-//        route_fab.setOnClickListener { showDirectionDialog() }
+        mapView.onCreate(savedInstanceState)
+        mapView.onResume()
+
+        try {
+            MapsInitializer.initialize(activity.applicationContext)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        mapView.getMapAsync({ map ->
+            mMap = map
+            mMap.setMinZoomPreference(18F)
+            mMap.uiSettings.isMyLocationButtonEnabled = false
+
+            initializeFloors()
+            initializePois()
+            mMap.uiSettings.isMapToolbarEnabled = false
+
+            startTrackingService(true)
+
+        })
+
+        mylocation_fab.setOnClickListener { displayMyPosition() }
+        route_fab.setOnClickListener { showDirectionDialog() }
     }
 
     private fun showRoute(poiOrigin: POI, poiDestiny: POI){
