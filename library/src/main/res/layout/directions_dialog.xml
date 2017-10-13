@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/origin_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/origin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/origin"
+        android:padding="20dp" />
+
+    <Spinner
+        android:id="@+id/origin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/origin_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="20dp"/>
+
+    <TextView
+        android:id="@+id/destiny_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/destiny"
+        app:layout_constraintTop_toBottomOf="@id/origin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/destiny"
+        android:padding="20dp"/>
+
+    <Spinner
+        android:id="@+id/destiny"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/destiny_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/origin"
+        android:padding="20dp"/>
+
+    <Button
+        android:id="@+id/confirm_btn"
+        android:background="@android:color/transparent"
+        android:text="@string/go"
+        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/destiny"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/cancel_btn" />
+
+    <Button
+        android:id="@+id/cancel_btn"
+        android:text="@string/cancel"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/destiny"
+        app:layout_constraintStart_toEndOf="@id/confirm_btn"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>
