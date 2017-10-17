@@ -79,7 +79,8 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
 
         mapView.getMapAsync({ map ->
             mMap = map
-            mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
+            mMap.mapType = GoogleMap.MAP_TYPE_NONE
+            mMap.setLatLngBoundsForCameraTarget(LatLngBounds(LatLng(-25.446111119099353 , -49.35726698487997), LatLng(-25.442681507819206 , -49.35494083911181)))
 
             mMap.setOnMapClickListener(GoogleMap.OnMapClickListener() {
                 fun onMapClick (point:LatLng ){
@@ -88,7 +89,6 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
                             Toast.LENGTH_SHORT).show()
                 }
             })
-
 
             mMap.setMinZoomPreference(18F)
             mMap.uiSettings.isMyLocationButtonEnabled = false
@@ -313,7 +313,7 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
 
                 if(mFloors!![0] != null){
                     selectFloor(0)
-                    val cameraUpdate = CameraUpdateFactory.newLatLngZoom(LatLng(mFloors!![0].latitude!!, mFloors!![0].longitude!!), 20f)
+                    val cameraUpdate = CameraUpdateFactory.newLatLngZoom(LatLng(mFloors!![0].latitude!!, mFloors!![0].longitude!!), 19f)
                     mMap.animateCamera(cameraUpdate)
                 }
 
