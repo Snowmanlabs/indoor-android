@@ -3,14 +3,11 @@ package com.snowmanlabs.indoor
 import android.Manifest
 import android.app.Dialog
 import android.content.pm.PackageManager
+import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
@@ -33,7 +30,11 @@ import com.google.android.gms.maps.model.BitmapDescriptor
 import com.squareup.picasso.Picasso
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import android.os.AsyncTask
+import android.util.Log
+import android.view.*
+import android.widget.Toast
 import java.io.IOException
+import kotlin.coroutines.experimental.EmptyCoroutineContext.plus
 
 
 /**
@@ -83,12 +84,27 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
 
         mapView.getMapAsync({ map ->
             mMap = map
+            mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
+
+            mMap.setOnMapClickListener(GoogleMap.OnMapClickListener() {
+                fun onMapClick (point:LatLng ){
+                    Toast.makeText(getContext(),
+                            point.latitude.toString() + ", " + point.longitude,
+                            Toast.LENGTH_SHORT).show()
+                }
+            })
+
+
             mMap.setMinZoomPreference(18F)
             mMap.uiSettings.isMyLocationButtonEnabled = false
 
             initializeFloors()
             initializePois()
             mMap.uiSettings.isMapToolbarEnabled = false
+
+            mMap.setOnMapClickListener {
+                Log.i(TAG, ""+it.latitude+"-"+it.longitude )
+            }
 
             startTrackingService(true)
 
@@ -130,7 +146,15 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
         val directionDialog = Dialog(context)
         directionDialog.setContentView(R.layout.directions_dialog)
 
-        val adapter =  ArrayAdapter<POI>(context, android.R.layout.simple_spinner_item, mPois)
+         var list = ArrayList<POI>()
+
+        mPois!!.forEach {
+            if(it.type!!.equals(POI.POI_TYPE)){
+                list.add(it)
+            }
+        }
+
+        val adapter =  ArrayAdapter<POI>(context, android.R.layout.simple_spinner_item, list)
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
@@ -192,10 +216,10 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
                     myLatLang, LatLngInterpolator.Linear())
         }
 
-        if(zoomMyPosition){
-            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(myLatLang, 20f)
-            mMap.animateCamera(cameraUpdate)
-        }
+//        if(zoomMyPosition){
+//            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(myLatLang, 20f)
+//            mMap.animateCamera(cameraUpdate)
+//        }
 
         zoomMyPosition = false
     }
@@ -259,7 +283,7 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
 
         mPois!!.forEach {
             val poi =  MapsUtils.markerFactory(mMap,it.latitude, it.longitude, it.name!!, it.description!!, R.drawable.ic_poi)
-            if(it.type == POI.CONNECTOR_TYPE){poi.isVisible = false}
+            poi.isVisible = false
             mPoisMarkes[it.id!!] = poi
             poisMap.put(it.id!!, it)
         }
