@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/origin_label"
-        android:layout_width="0dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="@string/origin"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,7 +27,7 @@
 
     <TextView
         android:id="@+id/destiny_label"
-        android:layout_width="0dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="@string/destiny"
         app:layout_constraintTop_toBottomOf="@id/origin"

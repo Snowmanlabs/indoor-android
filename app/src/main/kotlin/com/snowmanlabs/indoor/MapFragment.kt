@@ -132,46 +132,68 @@ class MapFragment: IndoorFragment() {
 
 
         //CONNECTORs
-        val poi102 = POI.Builder().id(102).name("Acesso Evento").type(POI.POI_TYPE).description("").latitude(-25.44408024879034).longitude(-49.35592319816351).build()
-        val poi103 = POI.Builder().id(103).name("Porta Acesso Evento").type(POI.POI_TYPE).description("").latitude(-25.444043918061528).longitude(-49.355978183448315).build()
-        val poi104 = POI.Builder().id(104).name("Corredor central 1").type(POI.POI_TYPE).description("").latitude(-25.444053606256944).longitude(-49.35601707547904).build()
-        val poi105 = POI.Builder().id(105).name("Corredor esquerdo 1").type(POI.POI_TYPE).description("").latitude(-25.444205589720593).longitude(-49.356139451265335).build()
-        val poi106 = POI.Builder().id(106).name("Corredor esquerdo 2").type(POI.POI_TYPE).description("").latitude(-25.444147157853884).longitude(-49.356213882565505).build()
-        val poi107 = POI.Builder().id(107).name("Corredor esquerdo 3").type(POI.POI_TYPE).description("").latitude(-25.444093570054818).longitude(-49.35629200190305).build()
-        val poi108 = POI.Builder().id(108).name("Corredor esquerdo 4").type(POI.POI_TYPE).description("").latitude(-25.44404270703705).longitude(-49.35636308044195).build()
-        val poi109 = POI.Builder().id(109).name("Corredor esquerdo 5").type(POI.POI_TYPE).description("").latitude(-25.443995779828974).longitude(-49.35643348842859).build()
-        val poi110 = POI.Builder().id(110).name("Corredor esquerdo 6").type(POI.POI_TYPE).description("").latitude(-25.443944311257166).longitude(-49.35649685561657).build()
-        val poi111 = POI.Builder().id(111).name("Corredor esquerdo 7").type(POI.POI_TYPE).description("").latitude(-25.443890117854828).longitude(-49.35657396912575).build()
-        val poi112 = POI.Builder().id(112).name("Corredor esquerdo 8").type(POI.POI_TYPE).description("").latitude(-25.443841676804166).longitude(-49.35665376484395).build()
-        val poi113 = POI.Builder().id(113).name("Corredor esquerdo 9").type(POI.POI_TYPE).description("").latitude(-25.44378354751766).longitude(-49.3567369133234).build()
-        val poi114 = POI.Builder().id(114).name("Corredor central 2").type(POI.POI_TYPE).description("").latitude(-25.44400213770984).longitude(-49.3560951948166).build()
-        val poi115 = POI.Builder().id(115).name("Corredor cl 1").type(POI.POI_TYPE).description("").latitude(-25.44406480823193).longitude(-49.35615722090006).build()
-        val poi116 = POI.Builder().id(116).name("Corredor cl 2").type(POI.POI_TYPE).description("").latitude(-25.444018183788664).longitude(-49.35622662305832).build()
-        val poi117 = POI.Builder().id(117).name("Corredor cl 3").type(POI.POI_TYPE).description("").latitude(-25.443967017982736).longitude(-49.35629535466432).build()
-        val poi118 = POI.Builder().id(118).name("Corredor cl 4").type(POI.POI_TYPE).description("").latitude(-25.443941889206176).longitude(-49.35628093779087).build()
-        val poi119 = POI.Builder().id(119).name("Corredor cl 5").type(POI.POI_TYPE).description("").latitude(-25.443894053689338).longitude(-49.356344975531094).build()
-        val poi120 = POI.Builder().id(120).name("Corredor cl 6").type(POI.POI_TYPE).description("").latitude(-25.443847429179954).longitude(-49.356418065726764).build()
-        val poi121 = POI.Builder().id(121).name("Corredor cl 7").type(POI.POI_TYPE).description("").latitude(-25.44379444676101).longitude(-49.35649652034044).build()
-        val poi122 = POI.Builder().id(122).name("Corredor cl 8").type(POI.POI_TYPE).description("").latitude(-25.44374025329123).longitude(-49.356573298573494).build()
-        val poi123 = POI.Builder().id(123).name("Corredor cl 9").type(POI.POI_TYPE).description("").latitude(-25.443682729469824).longitude(-49.35665477067232).build()
-        val poi124 = POI.Builder().id(124).name("Corredor cr 1").type(POI.POI_TYPE).description("").latitude(-25.44393522856574).longitude(-49.35604054480791).build()
-        val poi125 = POI.Builder().id(125).name("Corredor cr 2").type(POI.POI_TYPE).description("").latitude(-25.443890723367833).longitude(-49.3561153113842).build()
-        val poi126 = POI.Builder().id(126).name("Corredor cr 3").type(POI.POI_TYPE).description("").latitude(-25.443841374047533).longitude(-49.35618605464697).build()
-        val poi127 = POI.Builder().id(127).name("Corredor cr 4").type(POI.POI_TYPE).description("").latitude(-25.44386165873993).longitude(-49.356208853423595).build()
-        val poi128 = POI.Builder().id(128).name("Corredor cr 5").type(POI.POI_TYPE).description("").latitude(-25.44381654800146).longitude(-49.35627859085798).build()
-        val poi129 = POI.Builder().id(129).name("Corredor cr 6").type(POI.POI_TYPE).description("").latitude(-25.443767804164402).longitude(-49.356349669396884).build()
-        val poi130 = POI.Builder().id(130).name("Corredor cr 7").type(POI.POI_TYPE).description("").latitude(-25.443715427224323).longitude(-49.35642510652542).build()
-        val poi131 = POI.Builder().id(131).name("Corredor cr 8").type(POI.POI_TYPE).description("").latitude(-25.44366426128976).longitude(-49.35650859028101).build()
-        val poi132 = POI.Builder().id(132).name("Corredor cr 9").type(POI.POI_TYPE).description("").latitude(-25.443603709859826).longitude(-49.356591403484344).build()
-        val poi133 = POI.Builder().id(133).name("Corredor direito 1").type(POI.POI_TYPE).description("").latitude(-25.443916457667946).longitude(-49.35590073466301).build()
-        val poi134 = POI.Builder().id(134).name("Corredor direito 2").type(POI.POI_TYPE).description("").latitude(-25.443863172522807).longitude(-49.35598187148571).build()
-        val poi135 = POI.Builder().id(135).name("Corredor direito 3").type(POI.POI_TYPE).description("").latitude(-25.44381624524477).longitude(-49.35605697333813).build()
-        val poi136 = POI.Builder().id(136).name("Corredor direito 4").type(POI.POI_TYPE).description("").latitude(-25.44376871243483).longitude(-49.35612604022026).build()
-        val poi137 = POI.Builder().id(137).name("Corredor direito 5").type(POI.POI_TYPE).description("").latitude(-25.443719665821458).longitude(-49.356195107102394).build()
-        val poi138 = POI.Builder().id(138).name("Corredor direito 6").type(POI.POI_TYPE).description("").latitude(-25.44366910540283).longitude(-49.35626752674579).build()
-        val poi139 = POI.Builder().id(139).name("Corredor direito 7").type(POI.POI_TYPE).description("").latitude(-25.443620967020458).longitude(-49.356346316635616).build()
-        val poi140 = POI.Builder().id(140).name("Corredor direito 8").type(POI.POI_TYPE).description("").latitude(-25.443562837627418).longitude(-49.35642343014479).build()
-        val poi141 = POI.Builder().id(141).name("Corredor direito 9").type(POI.POI_TYPE).description("").latitude(-25.443506221993662).longitude(-49.356503896415234).build()
+        val poi102 = POI.Builder().id(102).name("Acesso Evento").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44408024879034).longitude(-49.35592319816351).build()
+        val poi103 = POI.Builder().id(103).name("Porta Acesso Evento").type(POI.CONNECTOR_TYPE).description("").latitude(-25.444043918061528).longitude(-49.355978183448315).build()
+        val poi104 = POI.Builder().id(104).name("Corredor central 1").type(POI.CONNECTOR_TYPE).description("").latitude(-25.444053606256944).longitude(-49.35601707547904).build()
+        val poi105 = POI.Builder().id(105).name("Corredor esquerdo 1").type(POI.CONNECTOR_TYPE).description("").latitude(-25.444205589720593).longitude(-49.356139451265335).build()
+        val poi106 = POI.Builder().id(106).name("Corredor esquerdo 2").type(POI.CONNECTOR_TYPE).description("").latitude(-25.444147157853884).longitude(-49.356213882565505).build()
+        val poi107 = POI.Builder().id(107).name("Corredor esquerdo 3").type(POI.CONNECTOR_TYPE).description("").latitude(-25.444093570054818).longitude(-49.35629200190305).build()
+        val poi108 = POI.Builder().id(108).name("Corredor esquerdo 4").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44404270703705).longitude(-49.35636308044195).build()
+        val poi109 = POI.Builder().id(109).name("Corredor esquerdo 5").type(POI.CONNECTOR_TYPE).description("").latitude(-25.443995779828974).longitude(-49.35643348842859).build()
+        val poi110 = POI.Builder().id(110).name("Corredor esquerdo 6").type(POI.CONNECTOR_TYPE).description("").latitude(-25.443944311257166).longitude(-49.35649685561657).build()
+        val poi111 = POI.Builder().id(111).name("Corredor esquerdo 7").type(POI.CONNECTOR_TYPE).description("").latitude(-25.443890117854828).longitude(-49.35657396912575).build()
+        val poi112 = POI.Builder().id(112).name("Corredor esquerdo 8").type(POI.CONNECTOR_TYPE).description("").latitude(-25.443841676804166).longitude(-49.35665376484395).build()
+        val poi113 = POI.Builder().id(113).name("Corredor esquerdo 9").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44378354751766).longitude(-49.3567369133234).build()
+        val poi114 = POI.Builder().id(114).name("Corredor central 2").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44400213770984).longitude(-49.3560951948166).build()
+        val poi115 = POI.Builder().id(115).name("Corredor cl 1").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44406480823193).longitude(-49.35615722090006).build()
+        val poi116 = POI.Builder().id(116).name("Corredor cl 2").type(POI.CONNECTOR_TYPE).description("").latitude(-25.444018183788664).longitude(-49.35622662305832).build()
+        val poi117 = POI.Builder().id(117).name("Corredor cl 3").type(POI.CONNECTOR_TYPE).description("").latitude(-25.443967017982736).longitude(-49.35629535466432).build()
+        val poi118 = POI.Builder().id(118).name("Corredor cl 4").type(POI.CONNECTOR_TYPE).description("").latitude(-25.443941889206176).longitude(-49.35628093779087).build()
+        val poi119 = POI.Builder().id(119).name("Corredor cl 5").type(POI.CONNECTOR_TYPE).description("").latitude(-25.443894053689338).longitude(-49.356344975531094).build()
+        val poi120 = POI.Builder().id(120).name("Corredor cl 6").type(POI.CONNECTOR_TYPE).description("").latitude(-25.443847429179954).longitude(-49.356418065726764).build()
+        val poi121 = POI.Builder().id(121).name("Corredor cl 7").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44379444676101).longitude(-49.35649652034044).build()
+        val poi122 = POI.Builder().id(122).name("Corredor cl 8").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44374025329123).longitude(-49.356573298573494).build()
+        val poi123 = POI.Builder().id(123).name("Corredor cl 9").type(POI.CONNECTOR_TYPE).description("").latitude(-25.443682729469824).longitude(-49.35665477067232).build()
+        val poi124 = POI.Builder().id(124).name("Corredor cr 1").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44393522856574).longitude(-49.35604054480791).build()
+        val poi125 = POI.Builder().id(125).name("Corredor cr 2").type(POI.CONNECTOR_TYPE).description("").latitude(-25.443890723367833).longitude(-49.3561153113842).build()
+        val poi126 = POI.Builder().id(126).name("Corredor cr 3").type(POI.CONNECTOR_TYPE).description("").latitude(-25.443841374047533).longitude(-49.35618605464697).build()
+        val poi127 = POI.Builder().id(127).name("Corredor cr 4").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44386165873993).longitude(-49.356208853423595).build()
+        val poi128 = POI.Builder().id(128).name("Corredor cr 5").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44381654800146).longitude(-49.35627859085798).build()
+        val poi129 = POI.Builder().id(129).name("Corredor cr 6").type(POI.CONNECTOR_TYPE).description("").latitude(-25.443767804164402).longitude(-49.356349669396884).build()
+        val poi130 = POI.Builder().id(130).name("Corredor cr 7").type(POI.CONNECTOR_TYPE).description("").latitude(-25.443715427224323).longitude(-49.35642510652542).build()
+        val poi131 = POI.Builder().id(131).name("Corredor cr 8").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44366426128976).longitude(-49.35650859028101).build()
+        val poi132 = POI.Builder().id(132).name("Corredor cr 9").type(POI.CONNECTOR_TYPE).description("").latitude(-25.443603709859826).longitude(-49.356591403484344).build()
+        val poi133 = POI.Builder().id(133).name("Corredor direito 1").type(POI.CONNECTOR_TYPE).description("").latitude(-25.443916457667946).longitude(-49.35590073466301).build()
+        val poi134 = POI.Builder().id(134).name("Corredor direito 2").type(POI.CONNECTOR_TYPE).description("").latitude(-25.443863172522807).longitude(-49.35598187148571).build()
+        val poi135 = POI.Builder().id(135).name("Corredor direito 3").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44381624524477).longitude(-49.35605697333813).build()
+        val poi136 = POI.Builder().id(136).name("Corredor direito 4").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44376871243483).longitude(-49.35612604022026).build()
+        val poi137 = POI.Builder().id(137).name("Corredor direito 5").type(POI.CONNECTOR_TYPE).description("").latitude(-25.443719665821458).longitude(-49.356195107102394).build()
+        val poi138 = POI.Builder().id(138).name("Corredor direito 6").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44366910540283).longitude(-49.35626752674579).build()
+        val poi139 = POI.Builder().id(139).name("Corredor direito 7").type(POI.CONNECTOR_TYPE).description("").latitude(-25.443620967020458).longitude(-49.356346316635616).build()
+        val poi140 = POI.Builder().id(140).name("Corredor direito 8").type(POI.CONNECTOR_TYPE).description("").latitude(-25.443562837627418).longitude(-49.35642343014479).build()
+        val poi141 = POI.Builder().id(141).name("Corredor direito 9").type(POI.CONNECTOR_TYPE).description("").latitude(-25.443506221993662).longitude(-49.356503896415234).build()
+
+        val poi142 = POI.Builder().id(142).name("hall").type(POI.CONNECTOR_TYPE).description("").latitude(-25.444286122713223).longitude(-49.35598388314247).build()
+        val poi143 = POI.Builder().id(143).name("acesso hall").type(POI.CONNECTOR_TYPE).description("").latitude(-25.444135653130665).longitude(-49.356085136532776).build()
+        val poi144 = POI.Builder().id(144).name("acesso salas 1").type(POI.CONNECTOR_TYPE).description("").latitude(-25.444472922718102).longitude(-49.35587659478187).build()
+        val poi145 = POI.Builder().id(145).name("acesso salas 2").type(POI.CONNECTOR_TYPE).description("").latitude(-25.444425087412213).longitude(-49.35597214847803).build()
+        val poi146 = POI.Builder().id(146).name("corredor esquerdo salas 1").type(POI.CONNECTOR_TYPE).description("").latitude(-25.4445080422977).longitude(-49.35574013739824).build()
+        val poi147 = POI.Builder().id(147).name("corredor esquerdo salas 2 ").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44461249271091).longitude(-49.355772994458675).build()
+        val poi148 = POI.Builder().id(148).name("corredor esquerdo salas 3").type(POI.CONNECTOR_TYPE).description("").latitude(-25.4447541818223).longitude(-49.355816580355174).build()
+        val poi149 = POI.Builder().id(149).name("corredor direito salas 1").type(POI.CONNECTOR_TYPE).description("").latitude(-25.444446583026696).longitude(-49.35597315430641).build()
+        val poi150 = POI.Builder().id(150).name("corredor direito salas 2").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44457979519999).longitude(-49.35601908713579).build()
+        val poi151 = POI.Builder().id(151).name("corredor direito salas 3").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44469635573074 ).longitude(-49.35605764389038).build()
+        val poi152 = POI.Builder().id(152).name("acesso restaurante 1").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44490374237013).longitude(-49.3558544665575).build()
+        val poi153 = POI.Builder().id(153).name("acesso restaurante 2").type(POI.CONNECTOR_TYPE).description("").latitude(-25.444832595169135).longitude(-49.35608882457018).build()
+        val poi154 = POI.Builder().id(154).name("entrada restaurante 1").type(POI.CONNECTOR_TYPE).description("").latitude(-25.444940072839547).longitude(-49.35583066195249).build()
+        val poi155 = POI.Builder().id(155).name("entrada restaurante 2").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44488648539333).longitude( -49.35606636106968).build()
+        val poi156 = POI.Builder().id(156).name("segundo acesso salas 1").type(POI.CONNECTOR_TYPE).description("").latitude(-25.445082367072523).longitude( -49.355928897857666).build()
+        val poi157 = POI.Builder().id(157).name("segundo acesso salas 2").type(POI.CONNECTOR_TYPE).description("").latitude(-25.445054513746545).longitude( -49.356048926711075).build()
+        val poi158 = POI.Builder().id(158).name("sala 1").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44513474341808).longitude( -49.355885311961174).build()
+        val poi159 = POI.Builder().id(159).name("sala 2").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44512687183002).longitude( -49.35594499111175).build()
+        val poi160 = POI.Builder().id(160).name("sala 3").type(POI.CONNECTOR_TYPE).description("").latitude(-25.445115064446984).longitude( -49.355999641120434).build()
+        val poi161 = POI.Builder().id(161).name("sala 4").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44509992677472).longitude( -49.35605362057686).build()
+        val poi162 = POI.Builder().id(162).name("sala 5").type(POI.CONNECTOR_TYPE).description("").latitude(-25.44508266982604).longitude( -49.35609754174948).build()
 
 
         //INITIALIZE CONNECTIONS
@@ -192,6 +214,7 @@ class MapFragment: IndoorFragment() {
         poi104.addDestination(poi105)
         poi104.addDestination(poi114)
         poi104.addDestination(poi133)
+        poi104.addDestination(poi143)
 
         //CORREDOR ESQUERDO 1
         poi105.addDestination(poi103)
@@ -469,6 +492,127 @@ class MapFragment: IndoorFragment() {
         poi141.addDestination(poi98)
         poi141.addDestination(poi100)
 
+
+        //acesso hall
+        poi143.addDestination(poi142)
+        poi143.addDestination(poi104)
+
+        //hall
+        poi142.addDestination(poi143)
+        poi142.addDestination(poi19)
+        poi142.addDestination(poi144)
+        poi142.addDestination(poi145)
+
+        //acesso salas 1
+        poi144.addDestination(poi142)
+        poi144.addDestination(poi146)
+
+        //acesso salas 2
+        poi145.addDestination(poi142)
+        poi145.addDestination(poi149)
+
+        //corredor esquerdo salas 1
+        poi146.addDestination(poi144)
+        poi146.addDestination(poi147)
+
+        //corredor esquerdo salas 2
+        poi147.addDestination(poi146)
+        poi147.addDestination(poi148)
+        poi147.addDestination(poi8)
+        poi147.addDestination(poi9)
+        poi147.addDestination(poi11)
+        poi147.addDestination(poi12)
+
+
+        //corredor esquerdo salas 3
+        poi148.addDestination(poi147)
+        poi148.addDestination(poi152)
+        poi148.addDestination(poi7)
+        poi148.addDestination(poi10)
+
+
+        //corredor direito salas 1
+        poi149.addDestination(poi144)
+        poi149.addDestination(poi150)
+        poi149.addDestination(poi15)
+        poi149.addDestination(poi18)
+
+        //corredor direito salas 2
+        poi150.addDestination(poi149)
+        poi150.addDestination(poi151)
+        poi150.addDestination(poi14)
+        poi150.addDestination(poi17)
+
+        //corredor direito salas 3
+        poi151.addDestination(poi150)
+        poi151.addDestination(poi153)
+        poi151.addDestination(poi13)
+        poi151.addDestination(poi16)
+
+
+
+        //acesso restaurante 1
+        poi152.addDestination(poi148)
+        poi152.addDestination(poi154)
+
+        //acesso restaurante 2
+        poi153.addDestination(poi151)
+        poi153.addDestination(poi155)
+
+        //entrada restaurante 1
+        poi154.addDestination(poi152)
+        poi154.addDestination(poi1)
+
+        //entrada restaurante 2
+        poi155.addDestination(poi153)
+        poi155.addDestination(poi1)
+
+        //restaurante
+        poi1.addDestination(poi154)
+        poi1.addDestination(poi155)
+        poi1.addDestination(poi156)
+        poi1.addDestination(poi157)
+
+        //segundo acesso salas 1
+        poi156.addDestination(poi1)
+        poi156.addDestination(poi158)
+        poi156.addDestination(poi159)
+        poi156.addDestination(poi160)
+        poi156.addDestination(poi161)
+        poi156.addDestination(poi162)
+
+
+        //segundo acesso salas 2
+        poi157.addDestination(poi1)
+        poi157.addDestination(poi158)
+        poi157.addDestination(poi159)
+        poi157.addDestination(poi160)
+        poi157.addDestination(poi161)
+        poi157.addDestination(poi162)
+
+
+        poi158.addDestination(poi2)
+        poi158.addDestination(poi157)
+        poi158.addDestination(poi156)
+
+        poi159.addDestination(poi3)
+        poi159.addDestination(poi157)
+        poi159.addDestination(poi156)
+
+        poi160.addDestination(poi4)
+        poi160.addDestination(poi157)
+        poi160.addDestination(poi156)
+
+        poi161.addDestination(poi5)
+        poi161.addDestination(poi157)
+        poi161.addDestination(poi156)
+
+        poi162.addDestination(poi6)
+        poi162.addDestination(poi157)
+        poi162.addDestination(poi156)
+
+
+
         //Studies
         poi121.addDestination(poi115)
         poi120.addDestination(poi124)
@@ -551,7 +695,24 @@ class MapFragment: IndoorFragment() {
         poi99.addDestination(poi140)
         poi100.addDestination(poi141)
 
-
+        //salas
+        poi2.addDestination(poi158)
+        poi3.addDestination(poi159)
+        poi4.addDestination(poi160)
+        poi5.addDestination(poi161)
+        poi6.addDestination(poi162)
+        poi7.addDestination(poi148)
+        poi8.addDestination(poi147)
+        poi9.addDestination(poi147)
+        poi10.addDestination(poi148)
+        poi11.addDestination(poi147)
+        poi12.addDestination(poi147)
+        poi13.addDestination(poi151)
+        poi14.addDestination(poi150)
+        poi15.addDestination(poi149)
+        poi16.addDestination(poi151)
+        poi17.addDestination(poi150)
+        poi18.addDestination(poi149)
 
         val pois = ArrayList<POI>()
         pois.add(poi0)
@@ -694,6 +855,27 @@ class MapFragment: IndoorFragment() {
         pois.add(poi139)
         pois.add(poi140)
         pois.add(poi141)
+        pois.add(poi142)
+        pois.add(poi143)
+        pois.add(poi144)
+        pois.add(poi145)
+        pois.add(poi146)
+        pois.add(poi147)
+        pois.add(poi148)
+        pois.add(poi149)
+        pois.add(poi150)
+        pois.add(poi151)
+        pois.add(poi152)
+        pois.add(poi153)
+        pois.add(poi154)
+        pois.add(poi155)
+        pois.add(poi156)
+        pois.add(poi157)
+        pois.add(poi158)
+        pois.add(poi159)
+        pois.add(poi160)
+        pois.add(poi161)
+        pois.add(poi162)
 
         return pois
     }

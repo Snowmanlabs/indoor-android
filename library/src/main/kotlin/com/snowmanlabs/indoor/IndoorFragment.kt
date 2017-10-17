@@ -3,7 +3,6 @@ package com.snowmanlabs.indoor
 import android.Manifest
 import android.app.Dialog
 import android.content.pm.PackageManager
-import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -34,8 +33,6 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import java.io.IOException
-import kotlin.coroutines.experimental.EmptyCoroutineContext.plus
-
 
 /**
  * Created by diefferson on 06/10/17.
@@ -57,8 +54,6 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
     private var mPois: List<POI>?= null
     private var poisMap = HashMap<Int, POI>()
     private var graph: Graph?= null
-
-    private var indoorPresenter: IndoorPresenter? =  null
 
     abstract fun getFloors():List<Floor>
     abstract fun getPois(): List<POI>
@@ -103,7 +98,7 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
             mMap.uiSettings.isMapToolbarEnabled = false
 
             mMap.setOnMapClickListener {
-                Log.i(TAG, ""+it.latitude+"-"+it.longitude )
+                Log.i(TAG, ""+it.latitude+" - "+it.longitude )
             }
 
             startTrackingService(true)
@@ -191,16 +186,6 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
             mMap.isMyLocationEnabled = false
             showMyPosition = !showMyPosition
         }
-
-//        if(getPresenter().isRunning){
-//            zoomMyPosition = true
-//            getPresenter().stop()
-//            if(myPosition!= null) myPosition!!.isVisible = false
-//        }else{
-//            loading.visibility = View.VISIBLE
-//            getPresenter().start()
-//            if(myPosition!= null)myPosition!!.isVisible = true
-//        }
     }
 
     override fun setMyPosition(position : Position){
@@ -216,11 +201,6 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
                     myLatLang, LatLngInterpolator.Linear())
         }
 
-//        if(zoomMyPosition){
-//            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(myLatLang, 20f)
-//            mMap.animateCamera(cameraUpdate)
-//        }
-
         zoomMyPosition = false
     }
 
@@ -228,14 +208,6 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
         mGroudOverlays.forEach {
             it.value.isVisible = it.key == floor
         }
-    }
-
-    private fun getPresenter(): IndoorPresenter {
-        if(indoorPresenter == null){
-            indoorPresenter = IndoorPresenter(context, this@IndoorFragment)
-        }
-
-        return indoorPresenter!!
     }
 
     private fun startTrackingService(checkPermission: Boolean) {
@@ -366,11 +338,6 @@ abstract class IndoorFragment : Fragment(), IIndoorView {
         super.onDestroy()
 
         if(mapView != null){  mapView.onDestroy() }
-
-//        if (indoorPresenter != null) {
-//            getPresenter().stop()
-//            indoorPresenter = null
-//        }
     }
 
     override fun onResume() {
