@@ -40,7 +40,6 @@ abstract class MapsUtils{
                         .visible(false)
                         .position(center, floor.width!!, floor.height!!)
                         .bearing(floor.bearing!!)
-                        .transparency(0.5f)
 
                 var groundOverlay =  mMap.addGroundOverlay(fpOverlay)
                 return groundOverlay
